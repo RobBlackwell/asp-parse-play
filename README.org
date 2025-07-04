@@ -1,0 +1,357 @@
+#+TITLE: Explore Clingo / ASP Grammar
+
+* Introduction
+
+The ASP-Core-2 input Language Format is specified by [[https://doi.org/10.1017/S1471068419000450][Calimeri et
+al. 2020]].  I have taken the EBNF grammar and lexical table therein and
+attempted to make a [[https://github.com/lark-parser/lark][LARK]] grammar.
+
+Beware, this grammar has only been tested on a few simple examples.
+
+* Example
+
+#+begin_src bash  :results verbatim :exports both
+  source venv/bin/activate
+  ./tool.py crime.lp
+#+end_src
+
+#+RESULTS:
+#+begin_example
+{
+  "type": "program",
+  "children": [
+    {
+      "type": "statements",
+      "children": [
+        {
+          "type": "statement",
+          "children": [
+            {
+              "type": "head",
+              "children": [
+                {
+                  "type": "disjunction",
+                  "children": [
+                    {
+                      "type": "classical_literal",
+                      "children": [
+                        {
+                          "type": "token",
+                          "value": "innocent",
+                          "token_type": "ID"
+                        },
+                        {
+                          "type": "token",
+                          "value": "(",
+                          "token_type": "PAREN_OPEN"
+                        },
+                        {
+                          "type": "terms",
+                          "children": [
+                            {
+                              "type": "token",
+                              "value": "Suspect",
+                              "token_type": "VARIABLE"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "token",
+                          "value": ")",
+                          "token_type": "PAREN_CLOSE"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "token",
+              "value": ":-",
+              "token_type": "CONS"
+            },
+            {
+              "type": "body",
+              "children": [
+                {
+                  "type": "body",
+                  "children": [
+                    {
+                      "type": "naf_literal",
+                      "children": [
+                        {
+                          "type": "classical_literal",
+                          "children": [
+                            {
+                              "type": "token",
+                              "value": "motive",
+                              "token_type": "ID"
+                            },
+                            {
+                              "type": "token",
+                              "value": "(",
+                              "token_type": "PAREN_OPEN"
+                            },
+                            {
+                              "type": "terms",
+                              "children": [
+                                {
+                                  "type": "token",
+                                  "value": "Suspect",
+                                  "token_type": "VARIABLE"
+                                }
+                              ]
+                            },
+                            {
+                              "type": "token",
+                              "value": ")",
+                              "token_type": "PAREN_CLOSE"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "token",
+                  "value": ",",
+                  "token_type": "COMMA"
+                },
+                {
+                  "type": "naf_literal",
+                  "children": [
+                    {
+                      "type": "token",
+                      "value": "not",
+                      "token_type": "NAF"
+                    },
+                    {
+                      "type": "classical_literal",
+                      "children": [
+                        {
+                          "type": "token",
+                          "value": "guilty",
+                          "token_type": "ID"
+                        },
+                        {
+                          "type": "token",
+                          "value": "(",
+                          "token_type": "PAREN_OPEN"
+                        },
+                        {
+                          "type": "terms",
+                          "children": [
+                            {
+                              "type": "token",
+                              "value": "Suspect",
+                              "token_type": "VARIABLE"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "token",
+                          "value": ")",
+                          "token_type": "PAREN_CLOSE"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "token",
+              "value": ".",
+              "token_type": "DOT"
+            }
+          ]
+        },
+        {
+          "type": "statement",
+          "children": [
+            {
+              "type": "head",
+              "children": [
+                {
+                  "type": "disjunction",
+                  "children": [
+                    {
+                      "type": "classical_literal",
+                      "children": [
+                        {
+                          "type": "token",
+                          "value": "motive",
+                          "token_type": "ID"
+                        },
+                        {
+                          "type": "token",
+                          "value": "(",
+                          "token_type": "PAREN_OPEN"
+                        },
+                        {
+                          "type": "terms",
+                          "children": [
+                            {
+                              "type": "term",
+                              "children": [
+                                {
+                                  "type": "token",
+                                  "value": "harry",
+                                  "token_type": "ID"
+                                },
+                                null,
+                                null,
+                                null
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "token",
+                          "value": ")",
+                          "token_type": "PAREN_CLOSE"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "token",
+              "value": ".",
+              "token_type": "DOT"
+            }
+          ]
+        },
+        {
+          "type": "statement",
+          "children": [
+            {
+              "type": "head",
+              "children": [
+                {
+                  "type": "disjunction",
+                  "children": [
+                    {
+                      "type": "classical_literal",
+                      "children": [
+                        {
+                          "type": "token",
+                          "value": "motive",
+                          "token_type": "ID"
+                        },
+                        {
+                          "type": "token",
+                          "value": "(",
+                          "token_type": "PAREN_OPEN"
+                        },
+                        {
+                          "type": "terms",
+                          "children": [
+                            {
+                              "type": "term",
+                              "children": [
+                                {
+                                  "type": "token",
+                                  "value": "sally",
+                                  "token_type": "ID"
+                                },
+                                null,
+                                null,
+                                null
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "token",
+                          "value": ")",
+                          "token_type": "PAREN_CLOSE"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "token",
+              "value": ".",
+              "token_type": "DOT"
+            }
+          ]
+        },
+        {
+          "type": "statement",
+          "children": [
+            {
+              "type": "head",
+              "children": [
+                {
+                  "type": "disjunction",
+                  "children": [
+                    {
+                      "type": "classical_literal",
+                      "children": [
+                        {
+                          "type": "token",
+                          "value": "guilty",
+                          "token_type": "ID"
+                        },
+                        {
+                          "type": "token",
+                          "value": "(",
+                          "token_type": "PAREN_OPEN"
+                        },
+                        {
+                          "type": "terms",
+                          "children": [
+                            {
+                              "type": "term",
+                              "children": [
+                                {
+                                  "type": "token",
+                                  "value": "harry",
+                                  "token_type": "ID"
+                                },
+                                null,
+                                null,
+                                null
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "token",
+                          "value": ")",
+                          "token_type": "PAREN_CLOSE"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "token",
+              "value": ".",
+              "token_type": "DOT"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+#+end_example
+
+* References
+
+Calimeri, F., Faber, W., Gebser, M., Ianni, G., Kaminski, R.,
+Krennwallner, T., Leone, N., Maratea, M., Ricca, F. and Schaub,
+T., 2020. ASP-Core-2 input language format. Theory and Practice of
+Logic Programming, 20(2), pp.294-309.
+https://doi.org/10.1017/S1471068419000450 .
