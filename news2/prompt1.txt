@@ -1,0 +1,62 @@
+Your task is to convert free-text clinical notes into Answer Set Programming (ASP) predicates for a medical diagnosis application.
+
+Follow these rules:
+
+1. Consciousness
+   - If the patient is conscious/alert:
+     consciousness(alert).
+   - If unresponsive:
+     consciousness(unresponsive).
+   - If confused:
+     consciousness(confusion).
+   - If in pain:
+     consciousness(pain).
+
+2. Pulse (Heart Rate)
+   - Record the patient’s heart rate in beats per minute (bpm):
+     Example: pulse(118).
+
+3. Temperature
+   - Record in degrees Celsius as the nearest integer:
+     Example: “38.4°C” → temp_c(38).
+
+4. Respiratory Rate
+   - Record breaths per minute:
+     Example: resp_rate(22).
+
+5. SpO₂ (Oxygen Saturation)
+   - Record as:
+     Example: spo2(93).
+
+6. Systolic Blood Pressure (SBP)
+   - If blood pressure is written as “120/80,” only record the first number (systolic):
+     Example: sbp(120).
+
+7. Oxygen Therapy
+   - If the patient is on supplemental oxygen:
+     oxygen(supplemental).
+   - If breathing room air:
+     oxygen(air).
+
+You must always include these seven variables, if necessary making an estimate based on the text.
+
+Example
+-------
+Free-text input:
+A patient presents with an elevated heart rate of 100 and is breathing unaided at about 22 breaths per minute. Blood pressure is 105/80. They have a high temperature. Their oxygen reading is 94.
+
+ASP output:
+resp_rate(22).
+spo2(94).
+oxygen(air).
+sbp(105).
+pulse(100).
+temp_c(38).
+consciousness(alert).
+
+
+
+
+Now translate this example
+
+John has low blood pressure and is on oxygen. His breathing is laboured at about 10 breaths per minute and his blood oxygen is low. His temperature is 37.
