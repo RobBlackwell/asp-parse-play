@@ -147,7 +147,8 @@ AGGREGATE_COUNT: "#count"
 AGGREGATE_MAX: "#max"
 AGGREGATE_MIN: "#min"
 AGGREGATE_SUM: "#sum"
-COMMENT: "%" /[^*\n][^\n]*/? "\n"
+//COMMENT: "%" /[^*\n][^\n]*/? "\n"
+COMMENT: "%" /[^\n]*/ ("\n" | /$/)
 MULTI_LINE_COMMENT: /%*(([^*]|\*[^%])*)\*%/
 BLANK: WS+
 
