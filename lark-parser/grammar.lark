@@ -1,6 +1,31 @@
-// ASP Parser based on https://www.cambridge.org/core/services/aop-cambridge-core/content/view/292E52334010C1F62E4469ABCD66228E/S1471068419000450a.pdf/div-class-title-asp-core-2-input-language-format-div.pdf
+// Answer Set Programming (ASP) Parser based on the ASP-Core-2 Input
+// Language Format (Calimeri et al. 2019), hacked with some Clingo
+// extensions.
+//
+// Robert Blackwell 2025
+//
 
-program: statements? query?
+// program: statements? query?
+
+program: item*
+item: directive
+    | statements
+    | query
+
+
+// Clingo specific
+
+directive: SHOW show_list? DOT
+
+// Clingo specific
+show_list: show_item (COMMA show_item)*
+
+// Clingo specific
+show_item: ID DIV NUMBER
+         | classical_literal
+
+// Clingo specific
+SHOW: "#show"
 
 statements: statement+
 query: classical_literal QUERY_MARK
@@ -16,13 +41,19 @@ body: (body COMMA)? (naf_literal | NAF? aggregate)
 
 disjunction: (disjunction OR)? classical_literal
 
+// choice: (term binop)? CURLY_OPEN choice_elements? CURLY_CLOSE (binop term)?
+
 choice: (term binop)? CURLY_OPEN choice_elements? CURLY_CLOSE (binop term)?
+      | term? CURLY_OPEN choice_elements? CURLY_CLOSE term?
 
 choice_elements: (choice_elements SEMICOLON)? choice_element
 
 choice_element: classical_literal (COLON naf_literals?)?
 
+// aggregate: (term binop)? aggregate_function CURLY_OPEN aggregate_elements? CURLY_CLOSE (binop term)?
+
 aggregate: (term binop)? aggregate_function CURLY_OPEN aggregate_elements? CURLY_CLOSE (binop term)?
+    | term? CURLY_OPEN choice_elements? CURLY_CLOSE term?
 
 aggregate_elements: (aggregate_elements SEMICOLON)? aggregate_element
 
