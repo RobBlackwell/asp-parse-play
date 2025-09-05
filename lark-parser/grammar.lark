@@ -2,8 +2,20 @@
 // Language Format (Calimeri et al. 2019), hacked with some Clingo
 // extensions.
 //
-// Robert Blackwell 2025
+// Copyright (c) 2025 Robert Blackwell
 //
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 // program: statements? query?
 
@@ -12,20 +24,6 @@ item: directive
     | statements
     | query
 
-
-// Clingo specific
-
-directive: SHOW show_list? DOT
-
-// Clingo specific
-show_list: show_item (COMMA show_item)*
-
-// Clingo specific
-show_item: ID DIV NUMBER
-         | classical_literal
-
-// Clingo specific
-SHOW: "#show"
 
 statements: statement+
 query: classical_literal QUERY_MARK
@@ -113,9 +111,6 @@ arithop: PLUS
        | DIV
 
 
-RANGE: ".."
-
-
 
 
 ID: /[a-z][A-Za-z0-9_]*/
@@ -158,10 +153,15 @@ COMMENT: "%" /[^\n]*/ ("\n" | /$/)
 MULTI_LINE_COMMENT: /%*(([^*]|\*[^%])*)\*%/
 BLANK: WS+
 
-// Symbolic constant missing from the spec
-
-SYMBOLIC_CONSTANT: /[a-z][A-Za-z0-9_]*/
-
 %import common.WS
 %ignore WS
 %ignore COMMENT
+
+// Symbolic constant missing from the spec
+SYMBOLIC_CONSTANT: /[a-z][A-Za-z0-9_]*/
+
+// Ignore all Clingo directives (for now)
+directive: /#[^\r\n]*/
+
+// Clingo range, e.g. num(1..5)
+RANGE: ".."
