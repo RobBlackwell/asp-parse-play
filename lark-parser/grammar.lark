@@ -92,6 +92,8 @@ terms: (terms COMMA)? term
      | PAREN_OPEN term PAREN_CLOSE
      | MINUS term
      | term arithop term
+     | NUMBER RANGE NUMBER
+
 
 basic_terms: (basic_terms COMMA)? basic_term
 
@@ -109,6 +111,10 @@ arithop: PLUS
        | MINUS
        | TIMES
        | DIV
+
+
+RANGE: ".."
+
 
 
 
